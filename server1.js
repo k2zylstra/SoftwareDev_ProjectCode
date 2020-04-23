@@ -223,6 +223,17 @@ app.get('/statistics', function (req, res) {
 		)
 });
 
+app.get('/home/quote', function (req, res) {
+	var today_date = new Date();
+	var day = today_date.getDate();
+	var index=  day % 6;
+	console.log("quote index: ", index);
+	var query = "select * from quotes where quote_id = " + index.toString();
+	db.any(query)
+		.then(function (quote) {
+			res.json({quote: quote})
+		});
+});
 
 app.listen(3000);
 console.log('3000 is the magic port');
