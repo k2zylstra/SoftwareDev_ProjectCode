@@ -4,10 +4,9 @@
 <link rel="stylesheet" href="../../css/statistics.css" />
 
 <!-- <body onload="startTime()"> -->
-<div class="container-fluid">
+<div class="container">
 	<div class="row">
-		<div class="col-1"></div>
-		<div class="col-8">
+		<div class="col">
 			<div class="card display-block">
 
 				<br>
@@ -96,10 +95,41 @@
 										<div class="container">
 											<div class="row">
 												<div class="col">
-													<i class="wi wi-day-cloudy"></i>
+													<i class="wi"></i>
 												</div>
 												<div class="col">
 													<p><%= weather[0].precipitation%></p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col">
+								<div class="card">
+									<div class="card-title">
+										<h5>Predicted Weather for Tommorow</h5>
+									</div>
+									<div class="card-body">
+										<div class="container">
+											<div class="row">
+												<div class="col-3">
+													<i class="wi"></i>
+												</div>
+												<div class="col">
+													<h6>Temp Max</h6>
+													<p><%= weather[0].temp_f_high%> &degF</p>
+													<h6>Temp Min</h6>
+													<p><%= weather[0].temp_f_low%> &degF</p>
+												</div>
+												<div class="col">
+													<h6>Coverage</h6>
+													<p><%= weather[0].precipitation%></p>
+													<h6>Wind</h6>
+													<p><%= weather[0].wind%> mph</p>
 												</div>
 											</div>
 										</div>
@@ -111,13 +141,21 @@
 				</div>
 			</div>
 		</div>
-		<div class="col">
-			<div class="other-city-block display-block card">
-				<h3>other city</h3>
-			</div>
-		</div>
-		<div class="col-1"></div>
 	</div>
 </div>
+<script>
+	var icons = document.getElementsByClassName("wi");
+	var classToAdd = "";
+	var weather = "<%= weather[0].precipitation%>";
+	if (weather = "Clouds") {
+		classToAdd = "wi-day-cloudy";
+	}
+	else {
+		classToAdd = "wi-day-sunny";
+	}
+	for (let i = 0; i < icons.length; i++) {
+		icons[i].classList.add(classToAdd);
+	}
+</script>
 
 <% include ../partials/footer %>
