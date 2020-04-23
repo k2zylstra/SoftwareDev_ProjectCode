@@ -39,7 +39,7 @@ app.use(express.static(__dirname + '/'));//This line is necessary for us to use 
 
 var pg = require('pg');
 var apiKey_hour = "xGXPt0sqTAIT7mQ1HZOsywWhRYhwfHFn";
-
+//http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/16834?apikey=xGXPt0sqTAIT7mQ1HZOsywWhRYhwfHFn
 
 //var ret = client.query("select * from daily_weather");
 
@@ -51,13 +51,34 @@ var apiKey = "6adef049dd8abe2d9aac6577b7a20f93";
 var conStr = "postgres://postgres:help@localhost:5432/weatherdb";//modify this line to the password you set in the database
 url = "http://api.openweathermap.org/data/2.5/weather?q=boulder,colorado&units=imperial&appid=" + apiKey;
 
+function insertHourWeather(url_hourly,conStr)
+{
+	var client=new pg.Client(conStr);
+	client.connect();
+	client.query("DELETE * FROM hour_weather", function(err,result)
+	{
+		if(err) throw err;
+		console.log("previous hour weather data cleared")	
+	}
+	var request = http.get(url_hourly, function (response) {
 
+		var buffer = "",
+			data;
+		response.on("data", function (chunk) {
+			buffer += chunk;
+		});
+		response.on("end", function (err) {
+			data=JSON.parse(buffer);
+			console.log(data);
+		}
 
+}
+}
 function insertDailyWeather(url, conStr) {
 
 	var client = new pg.Client(conStr);
 	client.connect();
-	console.log("Hello testing");
+	console.log("Hello daily");
 
 	var request = http.get(url, function (response) {
 
@@ -114,7 +135,21 @@ function insertDailyWeather(url, conStr) {
 }
 
 var query_today = "select * from Daily_Weather where day = cast(to_char(now(), 'YYYY-MM-DD') as date)";
+var query_hour = "select * from hour_Weather";
+
 var client = new pg.Client(conStr);
+client.connect()
+client.query(query_today)
+	.then((today) => {
+		console.log("today length: ", today.rows.length);
+		if (today.rows.length === 0) {
+			insertDailyWeather(url, conStr);
+		}
+		console.log("today: ", today.day);
+	})
+	.then(() => {
+		client.end();
+	});
 client.connect()
 client.query(query_today)
 	.then((today) => {
