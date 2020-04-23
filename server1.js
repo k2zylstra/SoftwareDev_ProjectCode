@@ -27,7 +27,7 @@ const dbConfig = {
 	port: 5432,
 	database: 'weatherdb',
 	user: 'postgres',
-	password: 'help' //modidfy this line  to the password you set on the database.
+	password: '00Zylstra' //modidfy this line  to the password you set on the database.
 };
 
 var db = pgp(dbConfig);
@@ -48,7 +48,7 @@ var http = require("http");
 //url_hourly = pro.openweathermap.org/data/2.5/forecast/hourly?id={city ID}&appid={your api key} 
 url_hourly = "http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/16834?apikey=" + apiKey_hour;
 var apiKey = "6adef049dd8abe2d9aac6577b7a20f93";
-var conStr = "postgres://postgres:help@localhost:5432/weatherdb";//modify this line to the password you set in the database
+var conStr = "postgres://postgres:00Zylstra@localhost:5432/weatherdb";//modify this line to the password you set in the database
 url = "http://api.openweathermap.org/data/2.5/weather?q=boulder,colorado&units=imperial&appid=" + apiKey;
 
 
@@ -194,6 +194,17 @@ app.get('/statistics', function (req, res) {
 		)
 });
 
+app.get('/home/quote', function (req, res) {
+	var today_date = new Date();
+	var day = today_date.getDate();
+	var index=  day % 6;
+	console.log("quote index: ", index);
+	var query = "select * from quotes where quote_id = " + index.toString();
+	db.any(query)
+		.then(function (quote) {
+			res.json({quote: quote})
+		});
+});
 
 app.listen(3000);
 console.log('3000 is the magic port');
