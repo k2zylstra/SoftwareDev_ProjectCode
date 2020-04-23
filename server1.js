@@ -27,7 +27,7 @@ const dbConfig = {
 	port: 5432,
 	database: 'weatherdb',
 	user: 'postgres',
-	password: '00Zylstra' //modidfy this line  to the password you set on the database.
+	password: 'help' //modidfy this line  to the password you set on the database.
 };
 
 var db = pgp(dbConfig);
@@ -48,32 +48,32 @@ var http = require("http");
 //url_hourly = pro.openweathermap.org/data/2.5/forecast/hourly?id={city ID}&appid={your api key} 
 url_hourly = "http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/16834?apikey=" + apiKey_hour;
 var apiKey = "6adef049dd8abe2d9aac6577b7a20f93";
-var conStr = "postgres://postgres:00Zylstra@localhost:5432/weatherdb";//modify this line to the password you set in the database
+var conStr = "postgres://postgres:help@localhost:5432/weatherdb";//modify this line to the password you set in the database
 url = "http://api.openweathermap.org/data/2.5/weather?q=boulder,colorado&units=imperial&appid=" + apiKey;
 
-function insertHourWeather(url_hourly,conStr)
-{
-	var client=new pg.Client(conStr);
-	client.connect();
-	client.query("DELETE * FROM hour_weather", function(err,result)
-	{
-		if(err) throw err;
-		console.log("previous hour weather data cleared")	
-	});
-	var request = http.get(url_hourly, function (response) {
+// function insertHourWeather(url_hourly,conStr)
+// {
+// 	var client=new pg.Client(conStr);
+// 	client.connect();
+// 	client.query("DELETE * FROM hour_weather", function(err,result)
+// 	{
+// 		if(err) throw err;
+// 		console.log("previous hour weather data cleared")	
+// 	});
+// 	var request = http.get(url_hourly, function (response) {
 
-		var buffer = "",
-			data;
-		response.on("data", function (chunk) {
-			buffer += chunk;
-		});
-		response.on("end", function (err) {
-			data=JSON.parse(buffer);
-			console.log(data);
-		});
+// 		var buffer = "",
+// 			data;
+// 		response.on("data", function (chunk) {
+// 			buffer += chunk;
+// 		});
+// 		response.on("end", function (err) {
+// 			data=JSON.parse(buffer);
+// 			console.log(data);
+// 		});
 
-	});
-}
+// 	});
+// }
 function insertDailyWeather(url, conStr) {
 
 	var client = new pg.Client(conStr);
@@ -150,12 +150,12 @@ client.query(query_today)
 	.then(() => {
 		client.end();
 	});
-client.connect()
-client.query(query_hour)
-	.then(() => {
-		insertHourWeather(url_hourly, conStr);
-		client.end();
-	});
+// client.connect()
+// client.query(query_hour)
+// 	.then(() => {
+// 		insertHourWeather(url_hourly, conStr);
+// 		client.end();
+// 	});
 
 setInterval(function () {
 	insertDailyWeather(url, conStr);
@@ -223,17 +223,6 @@ app.get('/statistics', function (req, res) {
 		)
 });
 
-app.get('/home/quote', function (req, res) {
-	var today_date = new Date();
-	var day = today_date.getDate();
-	var index=  day % 6;
-	console.log("quote index: ", index);
-	var query = "select * from quotes where quote_id = " + index.toString();
-	db.any(query)
-		.then(function (quote) {
-			res.json({quote: quote})
-		});
-});
 
 app.listen(3000);
 console.log('3000 is the magic port');
