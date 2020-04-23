@@ -59,7 +59,7 @@ function insertHourWeather(url_hourly,conStr)
 	{
 		if(err) throw err;
 		console.log("previous hour weather data cleared")	
-	}
+	});
 	var request = http.get(url_hourly, function (response) {
 
 		var buffer = "",
@@ -70,9 +70,9 @@ function insertHourWeather(url_hourly,conStr)
 		response.on("end", function (err) {
 			data=JSON.parse(buffer);
 			console.log(data);
-		}
+		});
 
-}
+	});
 }
 function insertDailyWeather(url, conStr) {
 
@@ -151,15 +151,9 @@ client.query(query_today)
 		client.end();
 	});
 client.connect()
-client.query(query_today)
-	.then((today) => {
-		console.log("today length: ", today.rows.length);
-		if (today.rows.length === 0) {
-			insertDailyWeather(url, conStr);
-		}
-		console.log("today: ", today.day);
-	})
+client.query(query_hour)
 	.then(() => {
+		insertHourWeather(url_hourly, conStr);
 		client.end();
 	});
 
