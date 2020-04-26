@@ -26,21 +26,8 @@ CREATE TABLE Daily_Weather (
 
 CREATE TABLE Hour_Weather (
 	hour_id SERIAL NOT NULL PRIMARY KEY
-	,day_id integer NOT NULL
-	,hour float NOT NULL
 	,temp_f float NOT NULL
-	,temp_c float NOT NULL
-	,humidity float NULL
-	,precip varchar(20) NOT NULL
-	,coverage varchar(20) NULL
-	,feels_like float NULL
-	,pressure float NULL
-	,wind float NULL
-	,description varchar(300) NULL
-	,precip_chance integer NOT NULL
-	,constraint fk_date
-		FOREIGN KEY (day_id)
-		REFERENCES Daily_Weather (day_id)
+	,precip_chance float NOT NULL
 );
 
 CREATE TABLE Quotes (
