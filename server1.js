@@ -45,7 +45,7 @@ var apiKey_hour = "xGXPt0sqTAIT7mQ1HZOsywWhRYhwfHFn";
 
 var http = require("http");
 
-//url_hourly = pro.openweathermap.org/data/2.5/forecast/hourly?id={city ID}&appid={your api key} 
+//url_hourly = pro.openweathermap.org/data/2.5/forecast/hourly?id={city ID}&appid={your api key}
 url_hourly = "http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/16834?apikey=" + apiKey_hour;
 var apiKey = "6adef049dd8abe2d9aac6577b7a20f93";
 var conStr = "postgres://postgres:help@localhost:5432/weatherdb";//modify this line to the password you set in the database
@@ -183,17 +183,17 @@ setInterval(function () {
 }, 86400000); //8640000 is 24 hours in milliseconds 1000 * 60 * 60 * 24
 
 app.get('/frontpage', function (req, res) {
-	var query = 'select * from daily_weather;';
-	var query2='select * from hour_weather;';
+	var query = "select * from Daily_Weather where day = cast(to_char(now(), 'YYYY-MM-DD') as date)"";
+	var query2= "select * from hour_Weather";
 	db.task('get-everything',task=> {
 		return task.batch([
 			task.any(query),
 			task.any(query2)
-
 		]);
 	})
 	.then(data=> {
 		res.render('pages/frontpage',{
+      local_css: "frontpage.css",
 			my_title: "Front Page",
 			dayWeather: data[0],
 			hourWeather: data[1]
