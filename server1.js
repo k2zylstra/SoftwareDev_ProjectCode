@@ -50,12 +50,12 @@ url_hourly = "http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/1683
 var apiKey = "6adef049dd8abe2d9aac6577b7a20f93";
 var conStr = "postgres://postgres:help@localhost:5432/weatherdb";//modify this line to the password you set in the database
 url = "http://api.openweathermap.org/data/2.5/weather?q=boulder,colorado&units=imperial&appid=" + apiKey;
-
-// function gethour(datetime)
-// {
-// 		var returnhour=Number(datetime[11]+datetime[12]);
-// 		return returnhour;
-// }
+//http://api.openweathermap.org/data/2.5/weather?q=boulder,colorado&units=imperial&appid=6adef049dd8abe2d9aac6577b7a20f93
+function gethour(datetime)
+{
+		var returnhour=Number(datetime[11]+datetime[12]);
+		return returnhour;
+}
 // function insertHourWeather(url_hourly,conStr)
 // {
 // 	var client=new pg.Client(conStr);
@@ -70,25 +70,32 @@ url = "http://api.openweathermap.org/data/2.5/weather?q=boulder,colorado&units=i
 // 		response.on("end", function (err) {
 // 			data=JSON.parse(buffer);
 //  			var date=new Date();
-// 			date=data[0].DateTime;
-// 			i=0;
-// 			//console.log(date[0].DateTime)
-// 			//var hour=gethour(date[0].DateTime);
-// 			var icon=data[0].WeatherIcon;
-// 			var temperature=data[0].Temperature['Value'];
-// 			var precipt=data[0].PrecipitationProbability;
-// 			debugger
+// 			date=data[0].DateTime[0]+data[5].DateTime[6]+data[0].DateTime[8]+data[0].DateTime[9]+data[0].DateTime[0]+data[0].DateTime[1]+data[0].DateTime[2]+data[0].DateTime[3];
+// 			for(var i=0;i<2;i++)
+// 			{
+// 				//var hour=gethour(date[0].DateTime);
+// 				var icon=data[i].WeatherIcon;
+// 				hour=data[i].DateTime[11]+data[i].DateTime[12]
+// 				var temperature=data[i].Temperature['Value'];
+// 				var precipt=data[i].PrecipitationProbability;
+// 				precip=false
+// 				debugger
 
-// 			client.query("INSERT INTO Hour_Weather(hour_id, temp_f, precip_chance) values ($1, $2, $3)",
-// 			[
-// 				i,
-// 				temperature,
-// 				precipt
-// 			]).then(() => { client.end() })
-// 			.catch(function (err) {
-// 				// display error message in case an error
-// 				console.log('error', err);
-// 			});
+// 				client.query("INSERT INTO Hour_Weather(hour_id, temp_f, precip_chance,Day_id,hour,temp_c,precip) values ($1, $2, $3,$4,$5,$6,$7)",
+// 				[
+// 					hour,
+// 					temperature,
+// 					precipt,
+// 					date,
+// 					hour,
+// 					temperature,
+// 					precip
+// 				]).then(() => { client.end() })
+// 				.catch(function (err) {
+// 					// display error message in case an error
+// 					console.log('error', err);
+// 				});}
+			
 // 		});
 // 	});
 
@@ -171,7 +178,6 @@ client.query(query_today)
 	.then(() => {
 		client.end();
 	});
-// client.connect()
 // client.query(query_hour)
 // 	.then(() => {
 // 		insertHourWeather(url_hourly, conStr);
