@@ -28,7 +28,7 @@ const dbConfig = {
 	port: 5432,
 	database: 'weatherdb',
 	user: 'postgres',
-	password: '00Zylstra' //modidfy this line  to the password you set on the database.
+	password: 'help' //modidfy this line  to the password you set on the database.
 };
 
 var db = pgp(dbConfig);
@@ -49,7 +49,7 @@ var http = require("http");
 //url_hourly = pro.openweathermap.org/data/2.5/forecast/hourly?id={city ID}&appid={your api key}
 var url_hourly = "http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/16834?apikey=" + apiKey_hour;
 var apiKey = "6adef049dd8abe2d9aac6577b7a20f93";
-var conStr = "postgres://postgres:00Zylstra@localhost:5432/weatherdb";//modify this line to the password you set in the database
+var conStr = "postgres://postgres:help@localhost:5432/weatherdb";//modify this line to the password you set in the database
 url = "http://api.openweathermap.org/data/2.5/weather?q=boulder,colorado&units=imperial&appid=" + apiKey;
 //http://api.openweathermap.org/data/2.5/weather?q=boulder,colorado&units=imperial&appid=6adef049dd8abe2d9aac6577b7a20f93
 function gethour(datetime) {
@@ -76,10 +76,8 @@ function insertHourWeather(url_hourly, conStr) {
 					async.forEachOf(data, (dataElement, i, inner_callback) => {
 						day_id = day_id_object.rows[0]["day_id"];
 						var hour = new Date(dataElement.DateTime).getHours();
-						var icon = dataElement.WeatherIcon;
 						var temperature = dataElement.Temperature['Value'];
 						var precipt = dataElement.PrecipitationProbability;
-						precipt = 5
 						var precip = "precip";
 						console.log(i)
 
@@ -87,16 +85,13 @@ function insertHourWeather(url_hourly, conStr) {
 							temperature,
 							precipt,
 							day_id,
-							hour,
-							precip);
-						client.query("INSERT INTO Hour_Weather(temp_f, precip_chance,Day_id,hour,temp_c,precip) values ($1, $2, $3,$4,$5,$6)",
+							hour);
+						client.query("INSERT INTO Hour_Weather(temp_f, precip_chance,Day_id,hour) values ($1, $2, $3,$4)",
 							[
 								temperature,
 								precipt,
 								day_id,
 								hour,
-								temperature,
-								precip
 							])
 							.then(() => { inner_callback(null) })
 							.catch(function (err) {
@@ -208,8 +203,8 @@ app.get('/frontpage', function (req, res) {
 		return task.batch([
 			task.any(query),
 			task.any(query2)
-		]);
-	})
+			]);
+		})
 		.then(data => {
 			res.render('pages/frontpage', {
 				local_css: "frontpage.css",
@@ -228,18 +223,24 @@ app.get('/frontpage', function (req, res) {
 			})
 		})
 });
-
-app.get('/futurepage', function (req, res) {
-	res.render('pages/futurepage', {
-		local_css: "futurepage.css",
-		my_title: "Future weather"
-	});
-});
 app.get('/previouspage', function (req, res) {
-	res.render('pages/previouspage', {
-		local_css: "previouspage.css",
-		my_title: "Previous weather"
-	});
+	var query3="select * from Daily_Weather";
+	db.any(query3)
+		.then(data => {
+			res.render('pages/previouspage', {
+				local_css: "previouspage.css",
+				my_title: "Previous weather",
+				dayWeather: data[0]
+			})	
+	})
+	.catch(function (err) {
+		// display error message in case an error
+		console.log('error', err);
+		res.render('pages/previouspage', {
+			title: 'Previous weather',
+			dayWeather: 'daily_weather failed'
+		})
+	})
 });
 app.get('/aboutus', function (req, res) {
 	res.render('pages/aboutus', {
@@ -262,6 +263,12 @@ app.get('/statistics', function (req, res) {
 		}
 		)
 });
+app.get('/futurepage', function (req, res) {
+	res.render('pages/futurepage', {
+		local_css: "futurepage.css",
+		my_title: "Future weather"
+	});
+});	
 
 
 app.listen(3000);

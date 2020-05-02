@@ -28,6 +28,8 @@ CREATE TABLE Hour_Weather (
 	hour_id SERIAL NOT NULL PRIMARY KEY
 	,temp_f float NOT NULL
 	,precip_chance float NOT NULL
+	,day_id SERIAL NOT NULL
+	,FOREIGN KEY(day_id) REFERENCES Daily_weather(day_id)
 );
 
 CREATE TABLE Quotes (
