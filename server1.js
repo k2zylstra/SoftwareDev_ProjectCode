@@ -28,7 +28,7 @@ const dbConfig = {
 	port: 5432,
 	database: 'weatherdb',
 	user: 'postgres',
-	password: 'help' //modidfy this line  to the password you set on the database.
+	password: '00Zylstra' //modidfy this line  to the password you set on the database.
 };
 
 var db = pgp(dbConfig);
@@ -49,7 +49,7 @@ var http = require("http");
 //url_hourly = pro.openweathermap.org/data/2.5/forecast/hourly?id={city ID}&appid={your api key}
 var url_hourly = "http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/16834?apikey=" + apiKey_hour;
 var apiKey = "6adef049dd8abe2d9aac6577b7a20f93";
-var conStr = "postgres://postgres:help@localhost:5432/weatherdb";//modify this line to the password you set in the database
+var conStr = "postgres://postgres:00Zylstra@localhost:5432/weatherdb";//modify this line to the password you set in the database
 url = "http://api.openweathermap.org/data/2.5/weather?q=boulder,colorado&units=imperial&appid=" + apiKey;
 //http://api.openweathermap.org/data/2.5/weather?q=boulder,colorado&units=imperial&appid=6adef049dd8abe2d9aac6577b7a20f93
 function gethour(datetime) {
@@ -77,6 +77,7 @@ function insertHourWeather(url_hourly, conStr) {
 						day_id = day_id_object.rows[0]["day_id"];
 						var hour = new Date(dataElement.DateTime).getHours();
 						var temperature = dataElement.Temperature['Value'];
+						var temp_c = (temperature * 9/5);
 						var precipt = dataElement.PrecipitationProbability;
 						var precip = "precip";
 						console.log(i)
@@ -86,9 +87,10 @@ function insertHourWeather(url_hourly, conStr) {
 							precipt,
 							day_id,
 							hour);
-						client.query("INSERT INTO Hour_Weather(temp_f, precip_chance,Day_id,hour) values ($1, $2, $3,$4)",
+						client.query("INSERT INTO Hour_Weather(temp_f, temp_c, precip_chance,Day_id,hour) values ($1, $2, $3,$4)",
 							[
 								temperature,
+								temp_c,
 								precipt,
 								day_id,
 								hour,
