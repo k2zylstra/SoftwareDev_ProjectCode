@@ -10,168 +10,111 @@
     </style>
   </head>
   <body background="../img/blue.jpg">
+    <% include ../partials/header %>
+    <% include ../partials/menu %>
+    <link rel="stylesheet" href="../../css/frontpage.css" />
+    \<% console.log(dayWeather) %>
+    <!-- <body onload="startTime()"> -->
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                <div class="display-block card">
 
-    <div class="rcorners2">
-      <br>
-      <div clas = row>
-      <div class="card"style="position:absolute;left:50px;top:40px;
-      text-align:center;
-      border:2px solid #FFD700;
-      width: 70rem;
-      height:45rem;
-      background:#FFFFFF;
-      border-radius:25px;
-      /*-moz-border-radius:25px;*/">
-      <body onload="startTime()">
-      <br>
-        <h3>17°C</h3>
-      <i class='fas fa-cloud-moon' style='font-size:48px;color:red'></i>
-      <h1> Boulder, Co</h1>
-    <p id="date">Todays date:</p>
-    <div class="dmy agileits w3-agile w3layouts">
-        <script type="text/javascript">
-            var mydate=new Date()
-            var year=mydate.getYear()
-            if(year<1000)
-            year+=1900
-            var day=mydate.getDay()
-            var month=mydate.getMonth()
-            var daym=mydate.getDate()
-            if(daym<10)
-            daym="0"+daym
-            var dayarray=new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday")
-            var montharray=new Array("January","February","March","April","May","June","July","August","September","October","November","December")
-            document.write(""+dayarray[day]+", "+montharray[month]+" "+daym+", "+year+"")
-        </script>
-        <br>
-        <br>
-        <table style="width:80%; text-align: center;position:absolute;left:80px;">
-          <tr>
-            <th >6AM</th>
-            <th >9AM</th>
-            <th >12PM</th>
-            <th >3PM</th>
-            <th >6PM</th>
-            <th >9PM</th>
-            <th >12AM</th>
-            <th >3AM</th>
-          </tr>
-          <tr>
-            <th>
-                <div id="owl-demo" class="owl-carousel agileits text-center">
-                    <div class="item w3threeitem w3threeitem1">
-                        <figure class="icons agileits-w3layouts agileits w3layouts">
-                            <canvas id="wind" width="50" height="50"></canvas>
-                        </figure>
-                        <i class='fas fa-cloud-meatball' style='font-size:48px;color:red'></i>
+                    <br>
+                    <div class = "card">
+                      <div class = "card-body">
+                    <img src="../img/weather_icons/svg/wi-night-clear.svg" width="100" height="50">
+                    <h1> Boulder, Co</h1>
+                    <p id="date">Todays date:</p>
+                    <div class="dmy agileits w3-agile w3layouts">
+                        <script type="text/javascript">
+                            var mydate = new Date()
+                            var year = mydate.getYear()
+                            if (year < 1000)
+                                year += 1900
+                            var day = mydate.getDay()
+                            var month = mydate.getMonth()
+                            var daym = mydate.getDate()
+                            if (daym < 10)
+                                daym = "0" + daym
+                            var dayarray = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+                            var montharray = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+                            document.write("" + dayarray[day] + ", " + montharray[month] + " " + daym + ", " + year + "")
+                        </script>
+                        </div>
+                        </div>
+                        </div>
                         <br>
-                        <h5>18°C</h5>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                      <div class="card-group">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">6am</h5>
+                            <img src="../img/weather_icons/svg/wi-day-sunny-overcast.svg" width="100" height="50">
+                            <p class="card-text"><% %></p>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">9am</h5>
+                            <img src="../img/weather_icons/svg/wi-day-sunny-overcast.svg" width="100" height="50">
+                            <p class="card-text"><% %></p>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">12am</h5>
+                            <img src="../img/weather_icons/svg/wi-day-sunny.svg" width="100" height="50">
+                            <p class="card-text"><% %></p>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">3pm</h5>
+                            <img src="../img/weather_icons/svg/wi-day-sunny.svg" width="100" height="50">
+                            <p class="card-text"><% %></p>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">6pm</h5>
+                            <img src="../img/weather_icons/svg/wi-day-sunny-overcast.svg" width="100" height="50">
+                            <p class="card-text"><% %></p>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">9pm</h5>
+                            <img src="../img/weather_icons/svg/wi-night-cloudy.svg" width="100" height="50">
+                            <br>
+                            <p class="card-text"><% %></p>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">12am</h5>
+                            <img src="../img/weather_icons/svg/wi-night-clear.svg" width="100" height="50">
+                            <br>
+                            <p class="card-text"><% %></p>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">3am</h5>
+                            <img src="../img/weather_icons/svg/wi-night-clear.svg" width="100" height="50">
+                            <br>
+                            <p class="card-text"><% %></p>
+                          </div>
+                        </div>
+                      </div>
+                        </div>
                     </div>
-            </th>
-            <th>
-                <div class="item w3threeitem agileinfo w3threeitem2">
-                    <figure class="icons wthree agileits w3layouts">
-                        <canvas id="sleet" width="50" class="w3ls" height="50"></canvas>
-                    </figure>
-                    <i class='	fas fa-bolt' style='font-size:48px;color:red'></i>
-                    <br>
-                    <h5>17°C</h5>
                 </div>
-            </th>
-            <th>
-                <div class="item w3 w3threeitem w3threeitem3">
-                    <figure class="icons agileits w3layouts">
-                        <canvas id="rain" width="50" height="50"></canvas>
-                    </figure>
-                    <i class='fas fa-cloud-moon-rain' style='font-size:48px;color:red'></i>
-                    <br>
-                    <h5>17°C</h5>
-                </div>
-            </th>
-            <th>
-                <div class="item w3threeitem w3threeitem4">
-                    <figure class="icons agileits w3layouts">
-                        <canvas id="fog" width="50" class="w3ls" height="50"></canvas>
-                    </figure>
-                    <i class='fas fa-smog' style='font-size:48px;color:red'></i>
-                    <br>
-                    <h5>21°C</h5>
-                </div>
-            </th>
-            <th>
-                <div class="item w3threeitem wthree agileinfo w3threeitem5">
-                    <figure class="icons agileits w3layouts">
-                        <canvas id="partly-cloudy-day" width="50" height="50"></canvas>
-                    </figure>
-                    <i class='fas fa-sun' style='font-size:48px;color:red'></i>
-                    <br>
-                    <h5>22°C</h5>
-                </div>
-            </th>
-            <th>
-                <div class="item w3 w3threeitem w3threeitem6">
-                    <figure class="icons agileits w3layouts">
-                        <canvas id="snow" width="50" height="50"></canvas>
-                    </figure>
-                    <i class='fas fa-snowflake' style='font-size:48px;color:red'></i>
-                    <br>
-                    <h5>3°C</h5>
-                </div>
-            </th>
-            <th>
-                <div class="item w3l w3threeitem w3threeitem7">
-                    <figure class="icons agileits w3layouts">
-                        <canvas id="cloudy" class="agileits-w3layouts" width="50" height="50"></canvas>
-                    </figure>
-                    <i class='fas fa-cloud-sun-rain' style='font-size:48px;color:red'></i>
-                    <br>
-                    <h5>14°C</h5>
-                </div>
-            </th>
-            <th>
-              <div class="item w3l w3threeitem w3threeitem7">
-                  <figure class="icons agileits w3layouts">
-                      <canvas id="cloudy" class="agileits-w3layouts" width="50" height="50"></canvas>
-                  </figure>
-                  <i class='fas fa-cloud-rain' style='font-size:48px;color:red'></i>
-                  <br>
-                  <h5>5°C</h5>
-          </tr>
-        </table>
-    </div>
-      </div>
-      <div class="card" style="position:absolute;left:1250px;top:40px;
-      border:2px solid #FFD700;
-      width: 45rem;
-      height: 45rem;
-      background:#FFFFFF;
-      width:300px;
-      border-radius:25px;
-      text-align: center;
-      /*-moz-border-radius:25px;*/">
-      <h3>other city</h3>
-      </div>
-      </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="../js/frontpage.js"></script>
-    <script>
-        function startTime() {
-            var today = new Date();
-            var h = today.getHours();
-            var m = today.getMinutes();
-            var s = today.getSeconds();
-            m = checkTime(m);
-            s = checkTime(s);
-            document.getElementById('txt').innerHTML = h + ":" + m + ":" + s;
-            var t = setTimeout(startTime, 500);
-        }
-        function checkTime(i) {
-            if (i < 10) {i = "0" + i};
-            return i;
-        }
-    </script>
+            </div>
+    <% include ../partials/footer %>
 </body>
 </html>
